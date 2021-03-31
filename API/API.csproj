@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+     <UserSecretsId>aspnet-API-06FE2C48-3C75-4DC4-A67C-7D38A2B6F3AD</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
