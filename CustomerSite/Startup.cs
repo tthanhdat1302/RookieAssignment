@@ -1,3 +1,4 @@
+using CustomerSite.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -53,6 +54,8 @@ namespace CustomerSite
                     };
                 });
 
+            services.AddHttpClient();
+            services.AddTransient<ICategoryClient,CategoryClient>();
             services.AddControllersWithViews();
         }
 

@@ -1,0 +1,13 @@
+@model IList<Shared.CategoryVm>
+
+<div class="dropdown">
+  <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Category
+  </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        @foreach (var cate in Model)
+        {
+            <a class="dropdown-item" href="#">@cate.Name</a>
+        }
+    </div>
+</div>
