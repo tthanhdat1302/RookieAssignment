@@ -15603,6 +15603,11 @@
   "RootNamespace": "CustomerSite",
   "Documents": [
     {
+      "FilePath": "e:\\Rookie\\CustomerSite\\Views\\Shared\\_LoginPartial.cshtml",
+      "TargetPath": "Views\\Shared\\_LoginPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Rookie\\CustomerSite\\Views\\Shared\\_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"
@@ -15625,6 +15630,11 @@
     {
       "FilePath": "e:\\Rookie\\CustomerSite\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Rookie\\CustomerSite\\Views\\Account\\MyProfile.cshtml",
+      "TargetPath": "Views\\Account\\MyProfile.cshtml",
       "FileKind": "mvc"
     },
     {
