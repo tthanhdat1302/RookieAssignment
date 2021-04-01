@@ -52,7 +52,8 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         public async Task<IActionResult> PutCategory(int id, CategoryCreateRequest categoryCreateRequest)
         {
             var cate = await _context.Categories.FindAsync(id);
@@ -69,7 +70,8 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<CategoryVm>> PostCategory(CategoryCreateRequest categoryCreateRequest)
         {
             var cate = new Category
@@ -84,7 +86,8 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             var cate = await _context.Categories.FindAsync(id);

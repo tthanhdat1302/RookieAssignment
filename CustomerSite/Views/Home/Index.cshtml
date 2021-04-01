@@ -1,8 +1,15 @@
-﻿@{
+﻿@model IList<Shared.ProductVm>
+
+@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="products">
+    @foreach (var product in Model)
+    {
+        <div class="card">
+            <p>@product.Name</p>
+            <img src="@product.Image"/>
+            <span>Price: <b>@product.Price</b> VND</span>
+        </div>
+    }
 </div>
