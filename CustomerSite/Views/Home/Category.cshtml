@@ -1,15 +1,18 @@
 ﻿@model IList<Shared.ProductVm>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Category Page";
 }
 <div class="products">
     @foreach (var product in Model)
     {
+        if(product.CategoryId==ViewBag.cateId)
+        {
         <a class="card" href='@Url.Action("Detail","Home",new {id=@product.Id})'>
             <p>@product.Name</p>
             <img src="@product.Image"/>
             <span>Price: <b>@product.Price</b> VND</span>
         </a>
+        }
     }
 </div>

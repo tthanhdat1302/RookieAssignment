@@ -27,6 +27,18 @@ namespace CustomerSite.Controllers
             return View(products);
         }
 
+         public async Task<IActionResult> Category(int id)
+        {
+            var products=await _productClient.GetProduct();
+            ViewBag.cateId=id;
+            return View(products);
+        }
+         public async Task<IActionResult> Detail(int id)
+        {
+            var products=await _productClient.GetProduct();
+            ViewBag.productId=id;
+            return View(products);
+        }
         public IActionResult Privacy()
         {
             return View();

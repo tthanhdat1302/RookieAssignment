@@ -7,7 +7,7 @@
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         @foreach (var cate in Model)
         {
-            <a class="dropdown-item" href="#">@cate.Name</a>
+            <a class="dropdown-item" href='@Url.Action("Category","Home",new{id=@cate.Id})'>@cate.Name</a>
         }
     </div>
 </div>

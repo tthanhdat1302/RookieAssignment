@@ -8,7 +8,7 @@ namespace CustomerSite.Controllers
     {
         public IActionResult SignIn()
         {
-            return Challenge(new AuthenticationProperties { RedirectUri = "/" }, "oidc");
+            return Challenge(new AuthenticationProperties { RedirectUri = "https://localhost:3001" }, "oidc");
         }
 
         public new IActionResult SignOut()
