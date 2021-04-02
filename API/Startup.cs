@@ -15,6 +15,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace API
 {
@@ -67,6 +69,11 @@ namespace API
                     policy.RequireAuthenticatedUser();
                 });
             });
+            
+            services.AddMvc(options=>{
+                var policy=new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }).AddXmlSerializerFormatters();
 
             services.AddControllersWithViews();
 
