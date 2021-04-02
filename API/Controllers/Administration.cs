@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using API.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace API.Controllers
 {
-   
+    [Authorize(Roles="Admin")]
     public class Administration : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -164,7 +166,35 @@ namespace API.Controllers
                 ViewBag.ErrorMessage=$"Role with Id = {roleId} cannot be found";
                 return View("NotFound");
             }
-           return View();
+            for(int i=0;i<models.Count;i++)
+            {
+                var user=await _userManager.FindByIdAsync(models[i].UserId);
+                IdentityResult result=null;
+                if(models[i].IsSelected && !(await _userManager.IsInRoleAsync(user,role.Name)))
+                {
+                    result = await _userManager.AddToRoleAsync(user,role.Name);
+                }
+                else if(!models[i].IsSelected && await _userManager.IsInRoleAsync(user,role.Name))
+                {
+                     result = await _userManager.RemoveFromRoleAsync(user,role.Name);
+                }
+                else
+                {
+                    continue;
+                }
+                if(result.Succeeded)
+                {
+                    if(i<models.Count-1)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return RedirectToAction("EditRole",new{Id=roleId});
+                    }
+                }
+            }
+           return RedirectToAction("EditRole",new{Id=roleId});
         } 
     }
 }
