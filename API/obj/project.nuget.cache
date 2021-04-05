@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "z8P7Bc8J/f+WmavaYsOWCYZJ5+GyIWanRk2Uh/Bj6yo4VTIOurAyjhx+Zcna7fUixCBXVIjVpjuuqrAnxPGvUA==",
+  "dgSpecHash": "Nsa6DDEItmfWnARPDOQ+j9sJxkznVgPipcFXP8OuuiWQAT99BpAZeX7kKRjAcfa979jq9fZ7eVB8vDJThSJ4jg==",
   "success": true,
-  "projectFilePath": "E:\\Rookie\\API\\API.csproj",
+  "projectFilePath": "E:\\Rookie\\api\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tthan\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\tthan\\.nuget\\packages\\identitymodel\\4.4.0\\identitymodel.4.4.0.nupkg.sha512",

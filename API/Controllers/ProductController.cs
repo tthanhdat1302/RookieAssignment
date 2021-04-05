@@ -90,7 +90,6 @@ namespace API.Controllers
                 Image=productCreateRequest.Image,
                 CategoryId=productCreateRequest.CategoryId,
             };
-
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 

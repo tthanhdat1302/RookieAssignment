@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Rookie\\API\\API.csproj": {}
+    "E:\\Rookie\\api\\API.csproj": {}
   },
   "projects": {
-    "E:\\Rookie\\API\\API.csproj": {
+    "E:\\Rookie\\api\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Rookie\\API\\API.csproj",
+        "projectUniqueName": "E:\\Rookie\\api\\API.csproj",
         "projectName": "API",
-        "projectPath": "E:\\Rookie\\API\\API.csproj",
+        "projectPath": "E:\\Rookie\\api\\API.csproj",
         "packagesPath": "C:\\Users\\tthan\\.nuget\\packages\\",
-        "outputPath": "E:\\Rookie\\API\\obj\\",
+        "outputPath": "E:\\Rookie\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\tthan\\AppData\\Roaming\\NuGet\\NuGet.Config",
