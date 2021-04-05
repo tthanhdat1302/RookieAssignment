@@ -37,7 +37,7 @@ namespace API.Controllers
                 string uniqueFileName=null;
                 if(model.Image!=null)
                 {
-                    string uploadsFolder=Path.Combine(_hostingEnvironment.WebRootPath,"images");
+                    string uploadsFolder=Path.Combine(@"E:\Rookie","CustomerSite","wwwroot","images");
                     uniqueFileName= Guid.NewGuid().ToString()+'_'+model.Image.FileName;
                     string filePath=Path.Combine(uploadsFolder,uniqueFileName);
                     model.Image.CopyTo(new FileStream(filePath,FileMode.Create));
