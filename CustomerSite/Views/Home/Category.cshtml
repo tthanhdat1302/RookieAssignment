@@ -8,10 +8,11 @@
     {
         if(product.CategoryId==ViewBag.cateId)
         {
-        var photoPath="~/images/"+(@product.Image??"noImage.jpg");
+        var base64 = Convert.ToBase64String(product.Image);
+        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
         <a class="card" href='@Url.Action("Detail","Home",new {id=@product.Id})'>
             <p>@product.Name</p>
-            <img src="@photoPath" asp-append-version="true"/>
+            <img src="@imgSrc" asp-append-version="true"/>
             <span>Price: <b>@product.Price</b> VND</span>
         </a>
         }

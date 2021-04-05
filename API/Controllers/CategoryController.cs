@@ -72,8 +72,8 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
-        // [AllowAnonymous]
+        // [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<CategoryVm>> PostCategory(CategoryCreateRequest categoryCreateRequest)
         {
             var cate = new Category

@@ -6,6 +6,7 @@ using API.Data;
 using API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -15,13 +16,11 @@ namespace API.Controllers
     public class ProductManagerController : Controller
     {
         private readonly ILogger<ProductManagerController> _logger;
-        private readonly IHostingEnvironment _hostingEnvironment;
         private readonly ApplicationDbContext _applicationDbContext;
 
-        public ProductManagerController(ILogger<ProductManagerController> logger,IHostingEnvironment hostingEnvironment,ApplicationDbContext applicationDbContext)
+        public ProductManagerController(ILogger<ProductManagerController> logger,ApplicationDbContext applicationDbContext)
         {
             _logger = logger;
-            _hostingEnvironment=hostingEnvironment;
             _applicationDbContext=applicationDbContext;
         }
         [HttpGet]
@@ -34,20 +33,22 @@ namespace API.Controllers
         {
             if(ModelState.IsValid)
             {
-                string uniqueFileName=null;
+                // string uniqueFileName=null;
+                byte[] p1=null;
                 if(model.Image!=null)
                 {
-                    string uploadsFolder=Path.Combine(@"E:\Rookie","CustomerSite","wwwroot","images");
-                    uniqueFileName= Guid.NewGuid().ToString()+'_'+model.Image.FileName;
-                    string filePath=Path.Combine(uploadsFolder,uniqueFileName);
-                    model.Image.CopyTo(new FileStream(filePath,FileMode.Create));
+                    using(var fs1=model.Image.OpenReadStream())
+                    using(var ms1=new MemoryStream()){
+                        fs1.CopyTo(ms1);
+                        p1=ms1.ToArray();
+                    }
                 }
                 Product product=new Product{
                     Name=model.Name,
                     Price=model.Price,
                     Description=model.Description,
                     CategoryId=model.CategoryId,
-                    Image=uniqueFileName
+                    Image=p1
                 };
                 _applicationDbContext.Products.Add(product);
                 await _applicationDbContext.SaveChangesAsync();
