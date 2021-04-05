@@ -8,9 +8,10 @@
     {
         if(product.CategoryId==ViewBag.cateId)
         {
+        var photoPath="~/images/"+(@product.Image??"noImage.jpg");
         <a class="card" href='@Url.Action("Detail","Home",new {id=@product.Id})'>
             <p>@product.Name</p>
-            <img src="@product.Image"/>
+            <img src="@photoPath" asp-append-version="true"/>
             <span>Price: <b>@product.Price</b> VND</span>
         </a>
         }

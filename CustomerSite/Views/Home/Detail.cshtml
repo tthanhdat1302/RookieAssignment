@@ -12,9 +12,10 @@
                         {
                             if(item.Id==ViewBag.productId)
                             {
+                            var photoPath="~/images/"+(@item.Image??"noImage.jpg");
                             <div class="preview col-md-6">
                             <div class="preview-pic tab-content">
-                                <img src="@item.Image">
+                                <img src="@photoPath" asp-append-version="true">
                             </div>
                             </div>
                             <div class="details col-md-6">
