@@ -56,7 +56,11 @@ namespace CustomerSite
                 });
 
             services.AddDistributedMemoryCache();
-            services.AddSession();
+            services.AddSession(options=>{
+                options.IdleTimeout=TimeSpan.FromSeconds(20);
+                options.Cookie.HttpOnly=true;
+                options.Cookie.IsEssential=true;
+            });
 
             services.AddHttpClient();
             services.AddTransient<ICategoryClient,CategoryClient>();

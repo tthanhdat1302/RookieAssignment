@@ -12,10 +12,16 @@
             var base64 = Convert.ToBase64String(product.Image);
             imgSrc = String.Format("data:image/gif;base64,{0}", base64);
         }
-        <a class="card" asp-action="Detail" asp-controller="Home" asp-route-id='@product.Id'>
+        <div class="card">
             <p>@product.Name</p>
-            <img src="@imgSrc" asp-append-version="true" id="productImg"/>
-            <span>Price: <b>@product.Price</b> VND</span>
-        </a>
+            <a asp-action="Detail" asp-controller="Home" asp-route-id='@product.Id'>
+                <img src="@imgSrc" asp-append-version="true" id="productImg" />
+            </a>
+            <span>Price: <b>@product.Price</b> VND 
+                <a asp-action="Buy" asp-controller="Cart" asp-route-id="@product.Id">
+                    <img src="~/images/cart.png" width="30px" height="30px">
+                </a>
+            </span>
+        </div>
     }
 </div>
