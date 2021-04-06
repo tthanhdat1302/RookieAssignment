@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Check out Page";
+}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width"/>
+    </head>
+    <body>
+        <h3>Check out Page</h3>
+        <table cellpadding="2" cellspacing="2" border="1">
+            <tr>
+                <th colspan="2">Total Amount To Pay</th>
+            </tr>
+            <tr>
+                <td>
+                    @ViewBag.total VND
+                </td>
+                <td>
+                    <a asp-action="Pay" asp-controller="Checkout">Pay</a>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
