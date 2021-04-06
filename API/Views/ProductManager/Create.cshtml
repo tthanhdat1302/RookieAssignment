@@ -33,7 +33,7 @@
         <label asp-for="Image" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <div class="custom-file">
-                <input asp-for="Image" class="form-control custom-file-input">
+                <input multi asp-for="Image" class="form-control custom-file-input">
                 <label class="custom-file-label">Choose File...</label>
             </div>
         </div>
@@ -51,8 +51,18 @@
         <script type="text/javascript">
              $(document).ready(function(){
                  $('.custom-file-input').on("change",function(){
-                     var fileName=$(this).val().split("\\").pop();
-                     $(this).next('.custom-file-label').html(fileName);
+                     var fileName=$(this).next('.custom-file-label');
+                     var files=$(this)[0].files;
+                     if(files.length>1)
+                     {
+                         fileName.html(files.length+" files is selected")
+                     }
+                     else if(files.length==1)
+                     {
+                         fileName.html(files[0].name)
+                     }
+                     @* var fileName=$(this).val().split("\\").pop();
+                     $(this).next('.custom-file-label').html(fileName); *@
                  });
              });
         </script>

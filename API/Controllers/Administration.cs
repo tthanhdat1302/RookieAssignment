@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-    [Authorize(Roles="Admin")]
+    // [Authorize(Roles="Admin")]
     public class Administration : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

@@ -6,11 +6,15 @@
 <div class="products">
     @foreach (var product in Model)
     {
-        var base64 = Convert.ToBase64String(product.Image);
-        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-        <a class="card" href='@Url.Action("Detail","Home",new {id=@product.Id})'>
+        var imgSrc="~/images/noImage.jpg";
+        if(product.Image!=null)
+        {
+            var base64 = Convert.ToBase64String(product.Image);
+            imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+        }
+        <a class="card" asp-action="Detail" asp-controller="Home" asp-route-id='@product.Id'>
             <p>@product.Name</p>
-            <img src="@imgSrc" asp-append-version="true"/>
+            <img src="@imgSrc" asp-append-version="true" id="productImg"/>
             <span>Price: <b>@product.Price</b> VND</span>
         </a>
     }

@@ -70,8 +70,8 @@ namespace API.Controllers
             product.Name = productCreateRequest.Name;
             product.Price=productCreateRequest.Price;
             product.Description=productCreateRequest.Description;
-            product.Image=productCreateRequest.Image;
             product.CategoryId=productCreateRequest.CategoryId;
+            product.Image=productCreateRequest.Image;
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -87,8 +87,8 @@ namespace API.Controllers
                 Name = productCreateRequest.Name,
                 Price=productCreateRequest.Price,
                 Description=productCreateRequest.Description,
-                Image=productCreateRequest.Image,
                 CategoryId=productCreateRequest.CategoryId,
+                Image=productCreateRequest.Image
             };
             _context.Products.Add(product);
             await _context.SaveChangesAsync();

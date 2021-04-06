@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Session;
 
 namespace CustomerSite
 {
@@ -54,10 +55,15 @@ namespace CustomerSite
                     };
                 });
 
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
             services.AddHttpClient();
             services.AddTransient<ICategoryClient,CategoryClient>();
             services.AddTransient<IProductClient,ProductClient>();
             services.AddControllersWithViews();
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,6 +86,8 @@ namespace CustomerSite
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
