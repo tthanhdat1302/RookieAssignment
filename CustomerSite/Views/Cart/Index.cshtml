@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Cart Page";
+}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width"/>
+    </head>
+    <body>
+        <h3>Cart Page</h3>
+        <table cellpadding="2" cellspacing="2" border="1">
+            <tr>
+                <th>Option</th>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Price</td>
+                <td>Quantity</td>
+                <td>Sub Total</td>
+            </tr>
+            @foreach (var item in ViewBag.cart)
+            {
+                <tr>
+                    <td><a asp-controller="Cart" asp-action="Remove" asp-route-id="@item.Product.Id">Remove</a></td>
+                    <td>@item.Product.Id</td>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Product.Price</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Product.Price*item.Quantity) VND</td>
+                </tr> 
+            }
+            <tr>
+                <td align="right" colspan="5">Sum</td>
+                <td>@ViewBag.total VND</td>
+            </tr>
+        </table>
+        <br>
+        <a asp-action="Index" asp-controller="Home">Continue Shopping</a>
+        <a asp-action="Index" asp-controller="Checkout" asp-route-id="">Check out</a>
+    </body>
+</html>
