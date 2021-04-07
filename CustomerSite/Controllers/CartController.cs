@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using CustomerSite.Models;
 using CustomerSite.Services;
 using CustomerSite.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace CustomerSite.Controllers
 {
@@ -21,8 +22,10 @@ namespace CustomerSite.Controllers
         public IActionResult Index(){
             var cart=SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session,"cart");
             ViewBag.cart=cart;
+            if(cart!=null)
+            {
             ViewBag.total=cart.Sum(pro=>pro.Product.Price*pro.Quantity);
-
+            }
             return View();
         }
         private int isExists(int id){
@@ -59,7 +62,7 @@ namespace CustomerSite.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        
         public IActionResult Remove(int id){
             List<Item> cart=SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session,"cart");
             int index=isExists(id);

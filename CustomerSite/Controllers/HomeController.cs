@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CustomerSite.Models;
 using CustomerSite.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace CustomerSite.Controllers
 {
@@ -35,6 +36,11 @@ namespace CustomerSite.Controllers
          public async Task<IActionResult> Detail(int id)
         {
             var products=await _productClient.GetProductById(id);
+            return View(products);
+        }
+
+        public async Task<IActionResult> Search(IFormCollection form){
+            var products = await _productClient.GetProductByName(form["name"].ToString());
             return View(products);
         }
         public IActionResult Privacy()

@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Shared;
 using System.Linq;
+using System;
 
 namespace CustomerSite.Services
 {
@@ -33,5 +34,15 @@ namespace CustomerSite.Services
             IList<ProductVm> a =await response.Content.ReadAsAsync<IList<ProductVm>>();
             return a.Where(x=>x.CategoryId==id);
         }
+
+        public async Task<IEnumerable<ProductVm>> GetProductByName(string name){
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync("https://localhost:5001/api/product");
+            response.EnsureSuccessStatusCode();
+            IList<ProductVm> productByName = await response.Content.ReadAsAsync<IList<ProductVm>>();
+            return productByName.Where(x => x.Name.StartsWith(name, StringComparison.OrdinalIgnoreCase));
+            
+        }
+
     }
 }

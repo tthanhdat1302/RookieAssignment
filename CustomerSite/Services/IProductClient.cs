@@ -9,5 +9,6 @@ namespace CustomerSite.Services
           Task<IList<ProductVm>> GetProduct();
           Task<ProductVm> GetProductById(int id);
           Task<IEnumerable<ProductVm>> GetProductByCate(int id);
+          Task<IEnumerable<ProductVm>> GetProductByName(string name);
     }
 }
