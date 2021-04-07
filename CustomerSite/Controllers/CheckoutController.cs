@@ -3,6 +3,7 @@ using CustomerSite.Helpers;
 using CustomerSite.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CustomerSite.Controllers
 {

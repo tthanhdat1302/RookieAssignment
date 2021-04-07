@@ -13550,6 +13550,23 @@
         }
       },
       {
+        "HashCode": 488970533,
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__CategoryMenuViewComponentTagHelper",
+        "AssemblyName": "CustomerSite",
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:category-menu"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__CategoryMenuViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "CategoryMenu"
+        }
+      },
+      {
         "HashCode": 1912741130,
         "Kind": "Components.Bind",
         "Name": "Bind",
@@ -15613,13 +15630,33 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Rookie\\CustomerSite\\Views\\Home\\Category.cshtml",
+      "TargetPath": "Views\\Home\\Category.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Rookie\\CustomerSite\\Views\\Shared\\Error.cshtml",
       "TargetPath": "Views\\Shared\\Error.cshtml",
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Rookie\\CustomerSite\\Views\\Home\\Search.cshtml",
+      "TargetPath": "Views\\Home\\Search.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Rookie\\CustomerSite\\Views\\_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Rookie\\CustomerSite\\Views\\Shared\\Components\\CategoryMenu\\Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\CategoryMenu\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Rookie\\CustomerSite\\Views\\Home\\Detail.cshtml",
+      "TargetPath": "Views\\Home\\Detail.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15633,8 +15670,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Rookie\\CustomerSite\\Views\\Cart\\Index.cshtml",
+      "TargetPath": "Views\\Cart\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Rookie\\CustomerSite\\Views\\Account\\MyProfile.cshtml",
       "TargetPath": "Views\\Account\\MyProfile.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Rookie\\CustomerSite\\Views\\Checkout\\Index.cshtml",
+      "TargetPath": "Views\\Checkout\\Index.cshtml",
       "FileKind": "mvc"
     },
     {

@@ -1,13 +1,10 @@
 @model IList<Shared.CategoryVm>
 
-<div class="dropdown">
-  <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Category
-  </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        @foreach (var cate in Model)
-        {
-            <a class="dropdown-item" asp-action='Category' asp-controller='Home' asp-route-id='@cate.Id'>@cate.Name</a>
-        }
-    </div>
-</div>
+<a href="#">Category<span class="caret"></span></a>
+  <ul class="dropdown-menu">  
+    @foreach (var cate in Model)
+    {
+      <li><a class="dropdown-item" asp-action='Category' asp-controller='Home' asp-route-id='@cate.Id'>@cate.Name</a></li>
+    }         
+  </ul>
+</a>
