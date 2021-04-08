@@ -3,12 +3,10 @@
     ViewData["Title"] = "Deital Page";
 }
 <div class="body1">
-
 <div class="container">
     <div class="card1">
         <div class="container-fliud">
             <div class="wrapper row">
-
                     @{
                         var imgSrc="~/images/noImage.jpg";
                         if(Model.Image!=null)
@@ -18,7 +16,7 @@
                         }
                         <div class="preview col-md-6">
                         <div class="preview-pic tab-content">
-                            <img src="@imgSrc" asp-append-version="true">
+                            <img src="@imgSrc" asp-append-version="true" height="500px">
                         </div>
                         </div>
                         <div class="details col-md-6">
@@ -53,8 +51,13 @@
                             <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
                         </div>
                     </div>
-                    }	
-                	
+                    }		
         </div>
+        <br>
+        <br><br><br>
+         <div class="wrapper row">
+             <p><b style="color: red;">Sản phẩm liên quan</b></p>
+             @await Component.InvokeAsync("SameProduct",@Model.Id)
+         </div>
     </div>
 </div>
