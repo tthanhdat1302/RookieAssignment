@@ -4,15 +4,19 @@ using System.Threading.Tasks;
 using Shared;
 using System.Linq;
 using System;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace CustomerSite.Services
 {
     public class ProductClient:IProductClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public ProductClient(IHttpClientFactory httpClientFactory)
+        private readonly IRatingClient _ratingClient;
+        public ProductClient(IHttpClientFactory httpClientFactory,IRatingClient ratingClient)
         {
             _httpClientFactory=httpClientFactory;
+            _ratingClient=ratingClient;
         }
         public async Task<IList<ProductVm>> GetProduct(){
             var client=_httpClientFactory.CreateClient();
@@ -52,6 +56,22 @@ namespace CustomerSite.Services
             IList<ProductVm> products = await response.Content.ReadAsAsync<IList<ProductVm>>();
             ProductVm product= await pro.Content.ReadAsAsync<ProductVm>();
             return products.Where(x => x.CategoryId == product.CategoryId && x.Id!=product.Id);    
+        }
+
+        public async Task PuttRatingProduct(int ProId,ProductCreateRequest model){
+            var client = new HttpClient();
+            double avr=await _ratingClient.FindRatingByProduct(ProId);
+            var product=await GetProductById(ProId);
+            model = new ProductCreateRequest(){
+                Name = product.Name,
+                Price = product.Price,
+                Image = product.Image,
+                Description = product.Description,
+                RatingAVG = avr,
+                CategoryId = product.CategoryId
+            };
+            await client.PutAsync("https://localhost:5001/api/product/" + ProId , new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json"));
+            
         }
 
     }

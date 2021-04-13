@@ -49,6 +49,7 @@ namespace API.Controllers
                 Price=product.Price,
                 Description=product.Description,
                 Image=product.Image,
+                RatingAVG=product.RatingAVG,
                 CategoryId=product.CategoryId
             };
 
@@ -72,6 +73,7 @@ namespace API.Controllers
             product.Description=productCreateRequest.Description;
             product.CategoryId=productCreateRequest.CategoryId;
             product.Image=productCreateRequest.Image;
+            product.RatingAVG=productCreateRequest.RatingAVG;
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -88,7 +90,8 @@ namespace API.Controllers
                 Price=productCreateRequest.Price,
                 Description=productCreateRequest.Description,
                 CategoryId=productCreateRequest.CategoryId,
-                Image=productCreateRequest.Image
+                Image=productCreateRequest.Image,
+                RatingAVG=productCreateRequest.RatingAVG,
             };
             _context.Products.Add(product);
             await _context.SaveChangesAsync();

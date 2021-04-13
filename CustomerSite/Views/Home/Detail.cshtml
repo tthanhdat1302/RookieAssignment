@@ -34,7 +34,19 @@
                                 <p class="product-description">@Model.Description</p>
                                 <p class="product-description">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus asperiores modi placeat, eos fugit doloremque veniam maiores repellendus dolore quod nesciunt recusandae illum eveniet rem. Explicabo delectus repudiandae aliquid ipsum?</p>
                                 <h4 class="price">current price: <span>@Model.Price</span></h4>
-                                <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+                                <p class="vote"><strong> This product has <b> @Model.RatingAVG / 5</b> ratings</strong></p>
+                                <p>
+                                    @if(User.Identity.IsAuthenticated){
+                                        using(Html.BeginForm("Rating","Home")) {
+                                        <input type="number" min="1" max="5" step="1" class="form-control" name="rate" placeholder="Rate our product" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                        <div class="input-group-append">
+                                        <input type="hidden" name="proId"  value="@Model.Id">
+                                        <input type="hidden" name="userName" value="@User.Identity.Name">
+                                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Rate</button>
+                                        </div>
+                                        }
+                                    }
+                                </p>
                         <h5 class="sizes">sizes:
                             <span class="size" data-toggle="tooltip" title="small">s</span>
                             <span class="size" data-toggle="tooltip" title="medium">m</span>
