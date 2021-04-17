@@ -70,5 +70,26 @@ namespace CustomerSite.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session,"cart",cart);
             return RedirectToAction("Index");
         }
+         public IActionResult AddItem(int id){
+            List<Item> cart=SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session,"cart");
+            int index=isExists(id);
+            if(index!=-1)
+            {
+                cart[index].Quantity++;
+            }
+            SessionHelper.SetObjectAsJson(HttpContext.Session,"cart",cart);
+            return RedirectToAction("Index");
+        }
+         public IActionResult DropItem(int id){
+            List<Item> cart=SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session,"cart");
+            int index=isExists(id);
+            if(index!=-1)
+            {
+                if(cart[index].Quantity!=0)
+                    cart[index].Quantity--;
+            }
+            SessionHelper.SetObjectAsJson(HttpContext.Session,"cart",cart);
+            return RedirectToAction("Index");
+        }
     }
 }

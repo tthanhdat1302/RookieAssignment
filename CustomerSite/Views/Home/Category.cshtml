@@ -8,11 +8,6 @@
     @foreach (var product in Model)
     {
     var imgSrc="~/images/noImage.jpg";
-    if(product.Image!=null)
-    {
-        var base64 = Convert.ToBase64String(product.Image);
-        imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-    }
     <li style="width: 250px;height:400px">
         <figure>
         <a class="aa-product-img" asp-action="Detail" asp-controller="Home" asp-route-id='@product.Id'>

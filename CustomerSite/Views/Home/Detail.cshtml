@@ -9,11 +9,6 @@
             <div class="wrapper row">
                     @{
                         var imgSrc="~/images/noImage.jpg";
-                        if(Model.Image!=null)
-                        {
-                            var base64 = Convert.ToBase64String(Model.Image);
-                            imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                        }
                         <div class="preview col-md-6">
                         <div class="preview-pic tab-content">
                             <img src="@imgSrc" asp-append-version="true" height="500px">

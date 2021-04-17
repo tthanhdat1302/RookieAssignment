@@ -58,7 +58,9 @@
                                     <td><a class="aa-cart-title"  asp-action="Detail" asp-controller="Home" asp-route-id='@item.Product.Id'>@item.Product.Name</a></td>
                                     <td>@item.Product.Price</td>
                                     <td>
-                                        <input class="aa-cart-quantity" type="number" value="@item.Quantity">
+                                        <a class="drop" asp-controller="Cart" asp-action="DropItem" asp-route-id="@item.Product.Id">Drop</a>
+                                        <input class="aa-cart-quantity" type="number" readonly=true value="@item.Quantity">
+                                        <a class="add" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Product.Id">Add</a>
                                     </td>                                    
                                     <td>@(item.Product.Price*item.Quantity) VND</td>
                                 </tr>

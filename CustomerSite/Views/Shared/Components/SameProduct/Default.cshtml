@@ -2,12 +2,7 @@
 
     @foreach (var item in Model)
     {
-        var imgSrc = "~/images/noImage.jpg";
-                  if(item.Image != null) {
-                  var base64 = Convert.ToBase64String(item.Image);
-                  imgSrc = String.Format("data:image/gif;base64,{0}",base64);
-                  }
-
+        var imgSrc = "~/images/noImage.jpg";            
         <div class="col-md-4 col-sm-6 col-xs-12 margin_bottom_30_all">
             <div class="car1" style="width: 250px;">
               <div class="product_img"> <img class="img-responsive" src="@imgSrc" alt="" width="100%" > </div>
