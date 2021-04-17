@@ -7,6 +7,10 @@ using Shared;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System;
+using Microsoft.AspNetCore.Hosting;
 
 namespace API.Controllers
 {
@@ -16,10 +20,12 @@ namespace API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public ProductController(ApplicationDbContext context)
+        public ProductController(ApplicationDbContext context,IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment=hostEnvironment;
         }
 
         [HttpGet]
@@ -27,7 +33,7 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<ProductVm>>> GetProducts()
         {
             return await _context.Products
-                .Select(x => new ProductVm { Id = x.Id, Name = x.Name,Price=x.Price,Description=x.Description,Image=x.Image,CategoryId=x.CategoryId })
+                .Select(x => new ProductVm { Id = x.Id, Name = x.Name,Price=x.Price,Description=x.Description,Image=x.Image,RatingAVG=x.RatingAVG,CategoryId=x.CategoryId })
                 .ToListAsync();
         }
 
@@ -59,9 +65,10 @@ namespace API.Controllers
         [HttpPut("{id}")]
         // [Authorize(Roles = "admin")]
         [AllowAnonymous]
-        public async Task<IActionResult> PutProduct(int id, ProductCreateRequest productCreateRequest)
+        public async Task<IActionResult> PutProduct(int id, [FromForm] ProductCreateRequest productCreateRequest)
         {
             var product = await _context.Products.FindAsync(id);
+            productCreateRequest.Image=await SaveImage(productCreateRequest.ImageFile);
 
             if (product == null)
             {
@@ -80,25 +87,37 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        // [Authorize(Roles = "admin")]
         [AllowAnonymous]
-        public async Task<ActionResult<ProductVm>> PostProduct(ProductCreateRequest productCreateRequest)
+        public async Task<IActionResult> PostProduct([FromForm] ProductCreateRequest productCreateRequest)
         {
+           productCreateRequest.Image=await SaveImage(productCreateRequest.ImageFile);
             var product = new Product
             {
                 Name = productCreateRequest.Name,
                 Price=productCreateRequest.Price,
                 Description=productCreateRequest.Description,
-                CategoryId=productCreateRequest.CategoryId,
                 Image=productCreateRequest.Image,
                 RatingAVG=productCreateRequest.RatingAVG,
-            };
+                CategoryId=productCreateRequest.CategoryId
+            };     
+            // product.ImageFile=productCreateRequest.ImageFile;
+            // product.Image=await SaveImage(product.ImageFile);
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.Id }, new ProductVm { Id = product.Id, Name = product.Name,Price=product.Price,Description=product.Description,Image=product.Image,CategoryId=product.CategoryId });
+            return StatusCode(201);
         }
-
+        [NonAction]
+        public async Task<string> SaveImage(IFormFile imageFile){
+            string imageName=new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ','-');
+            imageName=imageName+DateTime.Now.ToString("yymmssfff")+Path.GetExtension(imageFile.FileName);
+            var imagePath=Path.Combine(_hostEnvironment.ContentRootPath,"../CustomerSite/wwwroot/Image",imageName);
+            using(var fileStream=new FileStream(imagePath,FileMode.Create))
+            {
+                await imageFile.CopyToAsync(fileStream);
+            }
+            return imageName;
+        }
         [HttpDelete("{id}")]
         // [Authorize(Roles = "admin")]
         [AllowAnonymous]

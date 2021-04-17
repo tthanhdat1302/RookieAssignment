@@ -22,6 +22,8 @@ namespace API
 {
     public class Startup
     {
+         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,6 +36,7 @@ namespace API
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -75,6 +78,8 @@ namespace API
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddXmlSerializerFormatters();
 
+            services.AddCors();
+
             services.AddControllersWithViews();
 
             services.AddSwaggerGen(c =>
@@ -104,11 +109,15 @@ namespace API
                     }
                 });
             });
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(options=>options.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader());
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
