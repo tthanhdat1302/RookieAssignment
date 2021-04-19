@@ -1,0 +1,16 @@
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li >
+            <a class="text-dark" asp-controller="Account" asp-action="MyProfile">Hello: @User.Identity.Name !</a>
+        </li>
+        <li >
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="SignOut">Logout</a>
+        </li>
+    }
+    else
+    {
+        <li >
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="SignIn">Login</a>
+        </li>
+    }
