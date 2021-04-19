@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210416080004_Rookie")]
+    [Migration("20210419095255_Rookie")]
     partial class Rookie
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,27 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("API.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("OrderQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("OrderTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("API.Models.Product", b =>

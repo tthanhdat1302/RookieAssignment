@@ -66,6 +66,7 @@ namespace CustomerSite
             services.AddTransient<ICategoryClient,CategoryClient>();
             services.AddTransient<IProductClient,ProductClient>();
             services.AddTransient<IRatingClient,RatingClient>();
+            services.AddTransient<IOrderClient,OrderClient>();
             services.AddControllersWithViews();
 
            

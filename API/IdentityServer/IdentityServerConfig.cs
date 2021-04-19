@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace API.IdentityServer
 {
-     public static class IdentityServerConfig
+    public static class IdentityServerConfig
     {
         public static IEnumerable<IdentityResource> IdentityResources =>
             new List<IdentityResource>
@@ -44,6 +44,24 @@ namespace API.IdentityServer
                     RedirectUris = { "https://localhost:3001/signin-oidc" },
 
                     PostLogoutRedirectUris = { "https://localhost:3001/signout-callback-oidc" },
+
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "rookie.api"
+                    }
+                },
+                new Client
+                {
+                    ClientId = "react",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+
+                    AllowedGrantTypes = GrantTypes.Code,
+
+                    RedirectUris = { "http://localhost:3000/signin-oidc" },
+
+                    PostLogoutRedirectUris = { "http://localhost:3000/signout-callback-oidc" },
 
                     AllowedScopes = new List<string>
                     {

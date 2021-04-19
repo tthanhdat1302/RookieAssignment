@@ -7,7 +7,6 @@
 <ul class="aa-product-catg">
     @foreach (var product in Model)
     {
-        var imgSrc="~/images/noImage.jpg";
     <li>
         <figure>
         <a class="aa-product-img" asp-action="Detail" asp-controller="Home" asp-route-id='@product.Id'>

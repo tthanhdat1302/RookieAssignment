@@ -7,11 +7,10 @@
 <ul class="aa-product-catg">
     @foreach (var product in Model)
     {
-    var imgSrc="~/images/noImage.jpg";
     <li style="width: 250px;height:400px">
         <figure>
         <a class="aa-product-img" asp-action="Detail" asp-controller="Home" asp-route-id='@product.Id'>
-            <img src="@imgSrc" alt="polo shirt img" asp-append-version="true" width="100%" height="300px">
+            <img src='~/Image/@product.Image' alt="polo shirt img" asp-append-version="true" width="100%" height="300px">
         </a>
         <a class="aa-add-card-btn" asp-action="Buy" asp-controller="Cart" asp-route-id="@product.Id"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
             <figcaption>
