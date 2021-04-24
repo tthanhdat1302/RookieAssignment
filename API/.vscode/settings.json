@@ -1,0 +1,5 @@
+{
+    "appService.preDeployTask": "publish-release",
+    "appService.deploySubpath": "bin\\Release\\net5.0\\publish",
+    "appService.defaultWebAppToDeploy": "/subscriptions/2f740cf0-f72d-49a7-b69b-893aafa173f2/resourceGroups/RK10/providers/Microsoft.Web/sites/aoishin"
+}

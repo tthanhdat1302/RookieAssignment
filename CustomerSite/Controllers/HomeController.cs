@@ -38,7 +38,7 @@ namespace CustomerSite.Controllers
         }
          public async Task<IActionResult> Detail(int id)
         {
-             ProductCreateRequest productFormVm = new ProductCreateRequest();
+            ProductCreateRequest productFormVm = new ProductCreateRequest();
             await _productClient.PuttRatingProduct(id,productFormVm);
             var products = await _productClient.GetProductById(id);
             return View(products);

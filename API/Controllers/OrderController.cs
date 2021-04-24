@@ -77,7 +77,6 @@ namespace API.Controllers
             return StatusCode(201);
         }
         [HttpDelete("{id}")]
-        // [Authorize(Roles = "admin")]
         [AllowAnonymous]
         public async Task<IActionResult> DeleteOrder(int id)
         {

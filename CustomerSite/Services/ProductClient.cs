@@ -6,34 +6,37 @@ using System.Linq;
 using System;
 using Newtonsoft.Json;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace CustomerSite.Services
 {
     public class ProductClient:IProductClient
     {
+         private readonly IConfiguration _configuration;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IRatingClient _ratingClient;
-        public ProductClient(IHttpClientFactory httpClientFactory,IRatingClient ratingClient)
+        public ProductClient(IHttpClientFactory httpClientFactory,IRatingClient ratingClient,IConfiguration configuration)
         {
             _httpClientFactory=httpClientFactory;
             _ratingClient=ratingClient;
+            _configuration=configuration;
         }
         public async Task<IList<ProductVm>> GetProduct(){
             var client=_httpClientFactory.CreateClient();
-            var response =await client.GetAsync("https://localhost:5001/api/product");
+            var response =await client.GetAsync(_configuration["productApi"]);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsAsync<IList<ProductVm>>();
         }
         public async Task<ProductVm> GetProductById(int id){
             var client=_httpClientFactory.CreateClient();
-            var response =await client.GetAsync("https://localhost:5001/api/product/"+id);
+            var response =await client.GetAsync(_configuration["productApi"]+id);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsAsync<ProductVm>();
         }
 
         public async Task<IEnumerable<ProductVm>> GetProductByCate(int id){
              var client=_httpClientFactory.CreateClient();
-            var response =await client.GetAsync("https://localhost:5001/api/product");
+            var response =await client.GetAsync(_configuration["productApi"]);
             response.EnsureSuccessStatusCode();
             IList<ProductVm> a =await response.Content.ReadAsAsync<IList<ProductVm>>();
             return a.Where(x=>x.CategoryId==id);
@@ -41,7 +44,7 @@ namespace CustomerSite.Services
 
         public async Task<IEnumerable<ProductVm>> GetProductByName(string name){
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:5001/api/product");
+            var response = await client.GetAsync(_configuration["productApi"]);
             response.EnsureSuccessStatusCode();
             IList<ProductVm> productByName = await response.Content.ReadAsAsync<IList<ProductVm>>();
             return productByName.Where(x => x.Name.StartsWith(name, StringComparison.OrdinalIgnoreCase));   
@@ -49,8 +52,8 @@ namespace CustomerSite.Services
 
         public async Task<IEnumerable<ProductVm>> GetCateByProduct(int id){
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:5001/api/product");
-            var pro = await client.GetAsync("https://localhost:5001/api/product/"+id);
+            var response = await client.GetAsync(_configuration["productApi"]);
+            var pro = await client.GetAsync(_configuration["productApi"]+id);
             response.EnsureSuccessStatusCode();
             pro.EnsureSuccessStatusCode();
             IList<ProductVm> products = await response.Content.ReadAsAsync<IList<ProductVm>>();
@@ -68,9 +71,10 @@ namespace CustomerSite.Services
                 Image = product.Image,
                 Description = product.Description,
                 RatingAVG = avr,
-                CategoryId = product.CategoryId
+                CategoryId = product.CategoryId,
+                ImageFile=null
             };
-            await client.PutAsync("https://localhost:5001/api/product/" + ProId , new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json"));
+            await client.PutAsync(_configuration["productApi"]+"rating/" + product.Id , new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json"));
             
         }
 

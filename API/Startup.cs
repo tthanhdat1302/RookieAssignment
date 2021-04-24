@@ -61,7 +61,7 @@ namespace API
             services.AddAuthentication()
                 .AddLocalApi("Bearer", option =>
                 {
-                    option.ExpectedScope = "rookieshop.api";
+                    option.ExpectedScope = "rookie.api";
                 });
 
             services.AddAuthorization(options =>
@@ -116,18 +116,19 @@ namespace API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors(options=>options.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
-            
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            app.UseCors(options=>options.WithOrigins(Configuration["adminUrl"]).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+          
+            // if (env.IsDevelopment())
+            // {
+            // app.UseDeveloperExceptionPage();
+            // app.UseDatabaseErrorPage();
+            // }
+            // else
+            // {
+            //     app.UseExceptionHandler("/Home/Error");
+            //     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            //     app.UseHsts();
+            // }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

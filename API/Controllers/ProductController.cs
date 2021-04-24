@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using System;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace API.Controllers
 {
@@ -21,11 +22,13 @@ namespace API.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IConfiguration _configuration;
 
-        public ProductController(ApplicationDbContext context,IWebHostEnvironment hostEnvironment)
+        public ProductController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment, IConfiguration configuration)
         {
             _context = context;
-            _hostEnvironment=hostEnvironment;
+            _hostEnvironment = hostEnvironment;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -33,7 +36,7 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<ProductVm>>> GetProducts()
         {
             return await _context.Products
-                .Select(x => new ProductVm { Id = x.Id, Name = x.Name,Price=x.Price,Description=x.Description,Image=x.Image,RatingAVG=x.RatingAVG,CategoryId=x.CategoryId })
+                .Select(x => new ProductVm { Id = x.Id, Name = x.Name, Price = x.Price, Description = x.Description, Image = x.Image, RatingAVG = x.RatingAVG, CategoryId = x.CategoryId })
                 .ToListAsync();
         }
 
@@ -52,14 +55,40 @@ namespace API.Controllers
             {
                 Id = product.Id,
                 Name = product.Name,
-                Price=product.Price,
-                Description=product.Description,
-                Image=product.Image,
-                RatingAVG=product.RatingAVG,
-                CategoryId=product.CategoryId
+                Price = product.Price,
+                Description = product.Description,
+                Image = product.Image,
+                RatingAVG = product.RatingAVG,
+                CategoryId = product.CategoryId
             };
 
             return productVm;
+        }
+        [HttpPut]
+        [Route("rating/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> PutRatingAvg(int id, ProductCreateRequest productCreateRequest)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+            if (productCreateRequest.ImageFile != null)
+            {
+                productCreateRequest.Image = await SaveImage(productCreateRequest.ImageFile);
+            }
+
+            product.Name = productCreateRequest.Name;
+            product.Price = productCreateRequest.Price;
+            product.Description = productCreateRequest.Description;
+            product.CategoryId = productCreateRequest.CategoryId;
+            product.Image = productCreateRequest.Image;
+            product.RatingAVG = productCreateRequest.RatingAVG;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
         [HttpPut("{id}")]
@@ -68,19 +97,22 @@ namespace API.Controllers
         public async Task<IActionResult> PutProduct(int id, [FromForm] ProductCreateRequest productCreateRequest)
         {
             var product = await _context.Products.FindAsync(id);
-            productCreateRequest.Image=await SaveImage(productCreateRequest.ImageFile);
 
             if (product == null)
             {
                 return NotFound();
             }
+            if (productCreateRequest.ImageFile != null)
+            {
+                productCreateRequest.Image = await SaveImage(productCreateRequest.ImageFile);
+            }
 
             product.Name = productCreateRequest.Name;
-            product.Price=productCreateRequest.Price;
-            product.Description=productCreateRequest.Description;
-            product.CategoryId=productCreateRequest.CategoryId;
-            product.Image=productCreateRequest.Image;
-            product.RatingAVG=productCreateRequest.RatingAVG;
+            product.Price = productCreateRequest.Price;
+            product.Description = productCreateRequest.Description;
+            product.CategoryId = productCreateRequest.CategoryId;
+            product.Image = productCreateRequest.Image;
+            product.RatingAVG = productCreateRequest.RatingAVG;
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -90,29 +122,31 @@ namespace API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> PostProduct([FromForm] ProductCreateRequest productCreateRequest)
         {
-           productCreateRequest.Image=await SaveImage(productCreateRequest.ImageFile);
+            if(productCreateRequest.ImageFile!=null)
+            {
+                productCreateRequest.Image = await SaveImage(productCreateRequest.ImageFile);
+            }
             var product = new Product
             {
                 Name = productCreateRequest.Name,
-                Price=productCreateRequest.Price,
-                Description=productCreateRequest.Description,
-                Image=productCreateRequest.Image,
-                RatingAVG=productCreateRequest.RatingAVG,
-                CategoryId=productCreateRequest.CategoryId
-            };     
-            // product.ImageFile=productCreateRequest.ImageFile;
-            // product.Image=await SaveImage(product.ImageFile);
+                Price = productCreateRequest.Price,
+                Description = productCreateRequest.Description,
+                Image = productCreateRequest.Image,
+                RatingAVG = productCreateRequest.RatingAVG,
+                CategoryId = productCreateRequest.CategoryId
+            };
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
             return StatusCode(201);
         }
         [NonAction]
-        public async Task<string> SaveImage(IFormFile imageFile){
-            string imageName=new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ','-');
-            imageName=imageName+DateTime.Now.ToString("yymmssfff")+Path.GetExtension(imageFile.FileName);
-            var imagePath=Path.Combine(_hostEnvironment.ContentRootPath,"../CustomerSite/wwwroot/Image",imageName);
-            using(var fileStream=new FileStream(imagePath,FileMode.Create))
+        public async Task<string> SaveImage(IFormFile imageFile)
+        {
+            string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
+            imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(imageFile.FileName);
+            var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, "image", imageName);
+            using (var fileStream = new FileStream(imagePath, FileMode.Create))
             {
                 await imageFile.CopyToAsync(fileStream);
             }

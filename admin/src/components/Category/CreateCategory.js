@@ -12,7 +12,7 @@ export default function CreateCategory() {
         e.preventDefault()
         const formData=new FormData()
         formData.append('Name',e.Name)
-        Axios.post('https://localhost:5001/api/category',cate).then(()=>history.push('/category'))
+        Axios.post(`${process.env.REACT_APP_API_URL}/api/category`,cate).then(()=>history.push('/category'))
     }
     const handleChange=(e)=>{
         const {name,value}=e.target;

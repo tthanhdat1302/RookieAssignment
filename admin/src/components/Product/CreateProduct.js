@@ -46,7 +46,7 @@ export default function CreateProduct() {
         }
     }
 
-    const handleFormSubmit=(e)=>{
+    const handleFormSubmit=async(e)=>{
         e.preventDefault();
         const formData=new FormData()
         formData.append('Name',product.Name)
@@ -57,7 +57,7 @@ export default function CreateProduct() {
         formData.append('RatingAVG',product.RatingAVG)
         formData.append('CategoryId',parseInt(product.CategoryId))
         console.log(product)
-        Axios.post("https://localhost:5001/api/product",formData
+        await Axios.post(`${process.env.REACT_APP_API_URL}/api/product`,formData
         ).then(()=>{
             history.push('/product')
         })   
@@ -81,7 +81,7 @@ export default function CreateProduct() {
                 </div>
                 <div className="form-group">
                     <label>Image: </label><br/>
-                    <input type="file" accept="image/*" onChange={showPreview} className="form-control-file"/>
+                    <input type="file" accept="image/*" name="ImageFile" onChange={showPreview} className="form-control-file"/>
                     <img src={product.ImageSrc} style={{height:'500px',border:'1px solid black'}}></img>
                 </div>
                 <div className="form-group">
