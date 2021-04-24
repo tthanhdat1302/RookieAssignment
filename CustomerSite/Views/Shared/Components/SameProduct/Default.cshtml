@@ -1,11 +1,10 @@
 @model IEnumerable<Shared.ProductVm>
 
     @foreach (var item in Model)
-    {
-        var imgSrc = "~/images/noImage.jpg";            
+    {        
         <div class="col-md-4 col-sm-6 col-xs-12 margin_bottom_30_all">
             <div class="car1" style="width: 250px;">
-              <div class="product_img"> <img class="img-responsive" src="@imgSrc" alt="" width="100%" > </div>
+              <div class="product_img"> <img class="img-responsive" src="https://aoishin.scm.azurewebsites.net/dev/api/files/wwwroot/image/@item.Image" alt="" width="100%" > </div>
               <div class="product_detail_btm">
                 <div class="center">
                   <h4><a href="it_shop_detail.html">@item.Name</a></h4>

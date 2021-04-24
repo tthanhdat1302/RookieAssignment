@@ -13,7 +13,7 @@ export default function UpdateCategory() {
         e.preventDefault()
         const formData=new FormData()
         formData.append('Name',e.Name)
-        Axios.put('https://localhost:5001/api/category/'+id,cate).then(()=>history.push('/category'))
+        Axios.put(`${process.env.REACT_APP_API_URL}/api/category/`+id,cate).then(()=>history.push('/category'))
     }
     const handleChange=(e)=>{
         const {name,value}=e.target;

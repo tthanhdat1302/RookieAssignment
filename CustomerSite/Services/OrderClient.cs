@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Shared;
 
@@ -9,16 +10,18 @@ namespace CustomerSite.Services
 {
     public class OrderClient:IOrderClient
     {
+         private readonly IConfiguration _configuration;
          private readonly IHttpClientFactory _httpClientFactory;
 
-        public OrderClient(IHttpClientFactory httpClientFactory)
+        public OrderClient(IHttpClientFactory httpClientFactory,IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _configuration=configuration;
         }
 
         public async Task<IList<OrderVm>> GetOrder(){
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:5001/api/order");
+            var response = await client.GetAsync(_configuration["orderApi"]);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsAsync<IList<OrderVm>>();
 
@@ -27,7 +30,7 @@ namespace CustomerSite.Services
         public async Task PostOrder(OrderCreateRequest orderCreateRequest){
             var client = new HttpClient();
             OrderCreateRequest jsonInString= new OrderCreateRequest{OrderQuantity=orderCreateRequest.OrderQuantity,OrderTotal=orderCreateRequest.OrderTotal,UserName=orderCreateRequest.UserName};
-            await client.PostAsync("https://localhost:5001/api/order", new StringContent(JsonConvert.SerializeObject(jsonInString), Encoding.UTF8, "application/json")).ConfigureAwait(false);
+            await client.PostAsync(_configuration["orderApi"], new StringContent(JsonConvert.SerializeObject(jsonInString), Encoding.UTF8, "application/json")).ConfigureAwait(false);
             
         }
         // public async Task<RatingVm> SearchRating(int ProId,string UserName){

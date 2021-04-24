@@ -8,13 +8,13 @@ export default function ProductIndex() {
     const history=useHistory();
 
     useEffect(()=>{
-        Axios.get("https://localhost:5001/api/product").then(res=>{
+        Axios.get(`${process.env.REACT_APP_API_URL}/api/product`).then(res=>{
             setProduct(res.data)
         })
     },[])
 
     const deleteProduct=(id)=>{
-        Axios.delete("https://localhost:5001/api/product/"+id).then(()=>{
+        Axios.delete(`${process.env.REACT_APP_API_URL}/api/product/`+id).then(()=>{
             setProduct(product.filter(x=>x.id!=id))
         })
     }

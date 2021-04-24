@@ -25,19 +25,31 @@ import UpdateCategory from "./components/Category/UpdateCategory";
 import UserIndex from "./components/User/UserIndex";
 
 import Login from './components/Login/Login'
-import Logout from './components/Login/Logout'
+import LoginCallback from './components/Login/Login-Callback'
+import Logout from './components/Logout/Logout'
+import LogoutCallback from './components/Logout/Logout-Callback'
 
-
+import Oidc from 'oidc-client'
+import axios from 'axios'
+import {useState} from 'react'
 function App() {
+  var config={
+    userStore:new Oidc.WebStorageStateStore({store:window.localStorage}),
+    authority:`${process.env.REACT_APP_API_URL}`,
+    client_id :"react",
+    redirect_uri :`${process.env.REACT_APP_ADMIN_URL}/signin-oidc`,
+    post_logout_redirect_uri: `${process.env.REACT_APP_ADMIN_URL}/signout-oidc`,
+    response_type :"id_token token",
+    scope :"openid profile rookie.api",
+  }
+
+  var userManager=new Oidc.UserManager(config);
   return (
     <Router>
       <div>
         <Navbar color="light" light expand="md">
           <Collapse navbar>
             <Nav className="mr-auto" navbar>
-              <NavItem>
-                <NavLink href="/">Home</NavLink>
-              </NavItem>
               <NavItem>
                 <NavLink href="/product">Product</NavLink>
               </NavItem>
@@ -46,13 +58,10 @@ function App() {
               </NavItem>
               <NavItem>
                 <NavLink href="/user">User</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/login">Login</NavLink>
-              </NavItem>
+              </NavItem>            
               <NavItem>
                 <NavLink href="/logout">Logout</NavLink>
-              </NavItem>
+              </NavItem>            
             </Nav>
           </Collapse>
         </Navbar>
@@ -67,8 +76,11 @@ function App() {
 
           <Route exact path="/user" component={UserIndex}></Route>
 
-          <Route exact path="/login" component={Login}></Route>
-          <Route path="/logout" component={Logout} />
+          <Route exact path="/"><Login userManager={userManager}/></Route>
+          <Route exact path="/signin-oidc" ><LoginCallback></LoginCallback></Route>
+
+          <Route exact path="/logout"><Logout userManager={userManager}/></Route>
+          <Route exact path="/signout-oidc" ><LogoutCallback></LogoutCallback></Route>
         </Switch>
       </div>
     </Router>

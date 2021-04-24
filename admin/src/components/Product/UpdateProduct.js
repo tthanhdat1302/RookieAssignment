@@ -57,7 +57,7 @@ export default function UpdateProduct() {
         formData.append('ImageFile',product.ImageFile)
         formData.append('RatingAVG',product.RatingAVG)
         formData.append('CategoryId',parseInt(product.CategoryId))
-        Axios.put("https://localhost:5001/api/product/"+id,formData
+        Axios.put(`${process.env.REACT_APP_API_URL}/api/product/`+id,formData
         ).then(()=>{
             history.push('/product')
         })   

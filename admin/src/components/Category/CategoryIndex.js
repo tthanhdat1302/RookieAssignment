@@ -8,13 +8,13 @@ export default function CategoryIndex() {
     const history=useHistory();
 
     useEffect(()=>{
-        Axios.get("https://localhost:5001/api/category").then(res=>{
+        Axios.get(`${process.env.REACT_APP_API_URL}/api/category`).then(res=>{
             setCategory(res.data)
         })
     },[])
 
     const deleteCate=(id)=>{
-        Axios.delete("https://localhost:5001/api/category/"+id).then(()=>{
+        Axios.delete(`${process.env.REACT_APP_API_URL}/api/category/`+id).then(()=>{
             setCategory(category.filter(x=>x.id!=id))
         })
     }
