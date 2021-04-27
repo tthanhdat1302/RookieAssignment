@@ -7,7 +7,6 @@ namespace API.IdentityServer
 {
     public static class IdentityServerConfig
     {
-
         public static IEnumerable<IdentityResource> IdentityResources =>
             new List<IdentityResource>
             {
@@ -43,9 +42,9 @@ namespace API.IdentityServer
 
                     AllowedGrantTypes = GrantTypes.Code,
 
-                    RedirectUris = { "https://tdatcustomer.azurewebsites.net/signin-oidc" },
+                    RedirectUris = { "https://localhost:3001/signin-oidc" },
 
-                    PostLogoutRedirectUris = { "https://tdatcustomer.azurewebsites.net/signout-callback-oidc" },
+                    PostLogoutRedirectUris = { "https://localhost:3001/signout-callback-oidc" },
 
                     AllowedScopes = new List<string>
                     {
@@ -58,9 +57,9 @@ namespace API.IdentityServer
                 {
                     ClientId = "react",                  
                     AllowedGrantTypes = GrantTypes.Implicit,
-                    RedirectUris = { "https://tdatadmin.z23.web.core.windows.net/signin-oidc" },
-                    PostLogoutRedirectUris = { "https://tdatadmin.z23.web.core.windows.net/signout-oidc" },
-                    AllowedCorsOrigins={"https://tdatadmin.z23.web.core.windows.net"},
+                    RedirectUris = { "http://localhost:3000/signin-oidc" },
+                    PostLogoutRedirectUris = { "http://localhost:3000/signout-oidc" },
+                    AllowedCorsOrigins={"http://localhost:3000"},
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
@@ -80,9 +79,9 @@ namespace API.IdentityServer
                     RequireConsent = false,
                     RequirePkce = true,
 
-                    RedirectUris =           { $"https://aoishin.azurewebsites.net/swagger/oauth2-redirect.html" },
-                    PostLogoutRedirectUris = { $"https://aoishin.azurewebsites.net/swagger/oauth2-redirect.html" },
-                    AllowedCorsOrigins =     { $"https://aoishin.azurewebsites.net" },
+                    RedirectUris =           { $"https://localhost:5001/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"https://localhost:5001/swagger/oauth2-redirect.html" },
+                    AllowedCorsOrigins =     { $"https://localhost:5001" },
 
                     AllowedScopes = new List<string>
                     {

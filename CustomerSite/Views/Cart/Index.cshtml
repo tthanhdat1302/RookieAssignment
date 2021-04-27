@@ -1,6 +1,8 @@
 @{
     ViewData["Title"] = "Cart Page";
 }
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 <!DOCTYPE html>
 <section id="aa-catg-head-banner">
    <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img">
@@ -47,7 +49,7 @@
                                 <tr>
                                     <td><a class="remove" asp-controller="Cart" asp-action="Remove" asp-route-id="@item.Product.Id"><fa class="fa fa-close"></fa></a></td>
                                     <td><a class="aa-product-img" asp-action="Detail" asp-controller="Home" asp-route-id='@item.Product.Id'>
-                                            <img src='https://aoishin.scm.azurewebsites.net/dev/api/files/wwwroot/image/@item.Product.Image' alt="polo shirt img" asp-append-version="true" width="100%" height="300px">
+                                            <img src='@Configuration["imgUrl"]/@item.Product.Image' alt="polo shirt img" asp-append-version="true" width="100%" height="300px">
                                         </a>
                                     </td>
                                     <td><a class="aa-cart-title"  asp-action="Detail" asp-controller="Home" asp-route-id='@item.Product.Id'>@item.Product.Name</a></td>
@@ -60,11 +62,7 @@
                                     <td>@(item.Product.Price*item.Quantity) VND</td>
                                 </tr>
                             }
-                            <tr>
-                                <td colspan="6" class="aa-cart-view-bottom">
-                                <input class="aa-cart-view-btn" type="submit" value="Update Cart">
-                                </td>
-                            </tr>
+                      
                         </tbody>
                     }
                   </table>

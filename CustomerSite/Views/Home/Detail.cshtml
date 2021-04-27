@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Deital Page";
 }
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 <div class="body1">
 <div class="container">
     <div class="card1">
@@ -11,7 +13,7 @@
 
                         <div class="preview col-md-6">
                         <div class="preview-pic tab-content">
-                            <img src='https://aoishin.scm.azurewebsites.net/dev/api/files/wwwroot/image/@Model.Image' asp-append-version="true" height="500px">
+                            <img src='@Configuration["imgUrl"]/@Model.Image' asp-append-version="true" height="500px">
                         </div>
                         </div>
                         <div class="details col-md-6">

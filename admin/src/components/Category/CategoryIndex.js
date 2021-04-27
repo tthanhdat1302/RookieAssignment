@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom'
 import { Table,Button } from 'reactstrap';
 
 export default function CategoryIndex() {
-    const [category,setCategory]=useState([])
+   
     const history=useHistory();
-
+    const [category,setCategory]=useState([])
     useEffect(()=>{
         Axios.get(`${process.env.REACT_APP_API_URL}/api/category`).then(res=>{
             setCategory(res.data)
