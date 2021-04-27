@@ -1,10 +1,18 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { Button, Form } from 'reactstrap';
 import Axios from 'axios'
 import { BrowserRouter as Router,useHistory} from 'react-router-dom'
+import Select from 'react-select'
 
 export default function CreateProduct() {
     const imgDefault='/img/noImage.jpg'
+
+    const [category,setCategory]=useState([])
+    useEffect(()=>{
+        Axios.get(`${process.env.REACT_APP_API_URL}/api/category`).then(res=>{
+            setCategory(res.data)
+        })
+    },[])
 
     const [product,setProduct]=useState({
         Name:'',
@@ -13,7 +21,7 @@ export default function CreateProduct() {
         Image:'',
         ImageFile:null,
         RatingAVG:0,
-        CategoryId:2,
+        CategoryId:0,
         ImageSrc:imgDefault
     });
 
@@ -23,7 +31,13 @@ export default function CreateProduct() {
         const {name,value}=e.target;
         setProduct({...product,[name]:value});
     }
+    const onSelect=CategoryId=>{
+        setProduct({...product,CategoryId})
+    }
+    const {CategoryId}=product
 
+    var options=[]
+    category.map(x=>options.push({value:x.id,label:x.name}))
     const showPreview=e=>{
         if(e.target.files && e.target.files[0]){
             let imageFile=e.target.files[0];
@@ -48,6 +62,7 @@ export default function CreateProduct() {
 
     const handleFormSubmit=async(e)=>{
         e.preventDefault();
+        product.CategoryId=product.CategoryId.value
         const formData=new FormData()
         formData.append('Name',product.Name)
         formData.append('Price',parseFloat(product.Price))
@@ -86,7 +101,7 @@ export default function CreateProduct() {
                 </div>
                 <div className="form-group">
                     <label>Category: </label>
-                    <input type="text" className="form-control" name="CategoryId" onChange={handleChange}/>
+                    <Select options={options} onChange={onSelect} value={CategoryId}></Select>
                 </div>
                 <div className="form-group">
                     <Button color="success" type="submit" style={{marginRight:'20px'}}>Create Product</Button>
