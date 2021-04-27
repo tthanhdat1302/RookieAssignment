@@ -30,6 +30,10 @@ namespace API.Controllers
             _hostEnvironment = hostEnvironment;
             _configuration = configuration;
         }
+        public ProductController(ApplicationDbContext context)
+        {
+             _context = context;
+        }
 
         [HttpGet]
         [AllowAnonymous]
@@ -115,7 +119,7 @@ namespace API.Controllers
             product.RatingAVG = productCreateRequest.RatingAVG;
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Accepted();
         }
 
         [HttpPost]
@@ -138,7 +142,7 @@ namespace API.Controllers
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
-            return StatusCode(201);
+            return Ok();
         }
         [NonAction]
         public async Task<string> SaveImage(IFormFile imageFile)
@@ -166,7 +170,7 @@ namespace API.Controllers
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Accepted();
         }
     }
 }
