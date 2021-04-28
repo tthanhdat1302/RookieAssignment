@@ -30,10 +30,11 @@ namespace API.Controllers
             _hostEnvironment = hostEnvironment;
             _configuration = configuration;
         }
-        public ProductController(ApplicationDbContext context)
-        {
-             _context = context;
-        }
+        //FOR TEST
+        // public ProductController(ApplicationDbContext context)
+        // {
+        //      _context = context;
+        // }
 
         [HttpGet]
         [AllowAnonymous]
@@ -123,7 +124,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize("Admin")]
         public async Task<IActionResult> PostProduct([FromForm] ProductCreateRequest productCreateRequest)
         {
             if(productCreateRequest.ImageFile!=null)
@@ -158,7 +159,7 @@ namespace API.Controllers
         }
         [HttpDelete("{id}")]
         // [Authorize(Roles = "admin")]
-        [AllowAnonymous]
+       [Authorize("Admin")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);

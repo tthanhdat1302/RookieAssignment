@@ -32,7 +32,7 @@ import LogoutCallback from './components/Logout/Logout-Callback'
 import Oidc from 'oidc-client'
 import axios from 'axios'
 import {useState} from 'react'
-function App() {
+function App () {
   var config={
     userStore:new Oidc.WebStorageStateStore({store:window.localStorage}),
     authority:`${process.env.REACT_APP_API_URL}`,
@@ -44,8 +44,23 @@ function App() {
   }
 
   var userManager=new Oidc.UserManager(config);
-  return (
-    <Router>
+  userManager.getUser().then(user=>{
+    if(user){
+      localStorage.setItem("role",user.profile.role)
+      axios.defaults.headers.common["Authorization"]="Bearer "+user.access_token
+    }
+  })
+  if(localStorage.getItem("role")!="Admin")
+  {
+    return(
+      <Router>
+        <Route exact path="/"><Login userManager={userManager}/></Route>
+        <Route exact path="/signin-oidc" ><LoginCallback></LoginCallback></Route>
+      </Router>
+    )
+  }
+    return (
+      <Router>
       <div>
         <Navbar color="light" light expand="md">
           <Collapse navbar>
@@ -66,25 +81,26 @@ function App() {
           </Collapse>
         </Navbar>
         <Switch>
+        <Route exact path="/" component={ProductIndex} />
           <Route exact path="/product" component={ProductIndex} />
           <Route path="/product/create" component={CreateProduct} />
           <Route path="/product/update/:id" component={UpdateProduct} />
-
+  
           <Route exact path="/category" component={CategoryIndex} />
           <Route path="/category/create" component={CreateCategory} />
           <Route path="/category/update/:id" component={UpdateCategory} />
-
+  
           <Route exact path="/user" component={UserIndex}></Route>
-
-          <Route exact path="/"><Login userManager={userManager}/></Route>
+  
+          {/* <Route exact path="/"><Login userManager={userManager}/></Route> */}
           <Route exact path="/signin-oidc" ><LoginCallback></LoginCallback></Route>
-
+  
           <Route exact path="/logout"><Logout userManager={userManager}/></Route>
           <Route exact path="/signout-oidc" ><LogoutCallback></LogoutCallback></Route>
         </Switch>
       </div>
     </Router>
-  );
+    ); 
 }
 
 export default App;
