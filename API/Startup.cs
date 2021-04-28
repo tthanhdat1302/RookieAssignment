@@ -71,6 +71,12 @@ namespace API
                     policy.AddAuthenticationSchemes("Bearer");
                     policy.RequireAuthenticatedUser();
                 });
+                 options.AddPolicy("Admin", policy =>
+                {
+                    policy.AddAuthenticationSchemes("Bearer");
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole("Admin");
+                });
             });
             
             services.AddMvc(options=>{
@@ -116,7 +122,7 @@ namespace API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors(options=>options.WithOrigins(Configuration["adminUrl"]).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseCors(options=>options.WithOrigins(Configuration["adminUrl"]).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
           
             // if (env.IsDevelopment())
             // {

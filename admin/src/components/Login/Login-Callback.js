@@ -17,7 +17,9 @@ export default function LoginCallback() {
     return (
         // extractTokens(window.location.href)
         userManager.signinCallback().then(res=>{
-            userManager.getUser().then(user=>user.profile.role==="Admin"?window.location.href=process.env.REACT_APP_ADMIN_URL+'/product':window.location.href=process.env.REACT_APP_API_URL)
+            userManager.getUser().then(user=>user.profile.role==="Admin"?
+            window.location.href=process.env.REACT_APP_ADMIN_URL+'/':
+            userManager.signoutRedirect())
             
         })
     )
